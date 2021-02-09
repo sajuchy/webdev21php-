@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,32 +14,47 @@
 <body>
 
 <div class="container">
-  <h2>Basic Table</h2>
-  <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
+  <h2 class="text-center display-4 text-success">Crud operation</h2>
+  <p class="text-center text-danger">User Information</p> 
+  <a href="insert.php" class="btn btn-primary" target="_blank">Add New</a>           
   <table class="table">
     <thead>
       <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
         <th>Email</th>
+        <th>Date of Birth</th>
+        <th>Action</th>
       </tr>
     </thead>
+     
     <tbody>
+    <?php
+
+        include 'connect.php';
+
+        $sql= "SELECT * FROM user";
+        $query= mysqli_query($conn, $sql);
+
+          if($query){
+            if(mysqli_num_rows($query)>0){
+              while($row= mysqli_fetch_assoc($query)){
+
+              
+
+    ?>
       <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
+        <td><?php echo $row['email'] ?></td>
+        <td><?php echo $row['dob'] ?></td>
+        <td><a href="edit.php?id=<?=$row['id'];?>" target="" class="btn btn-success">Edit</a>
+            <a href="delete.php?id=<?=$row['id'];?>" target="" class="btn btn-danger">Delete</a>
+        </td>
+       
       </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
+    <?php
+            }
+         }
+      
+       }
+    ?>
     </tbody>
   </table>
 </div>
